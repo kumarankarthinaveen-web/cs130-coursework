@@ -1,0 +1,549 @@
+import tkinter as tk
+from tkinter import messagebox, simpledialog
+import json
+import os
+
+FILE_NAME = "books.json"
+
+
+# Load books from file
+def load_books():
+    if os.path.exists(FILE_NAME):
+        try:
+            with open(FILE_NAME, "r") as file:
+                return json.load(file)
+        except:
+            return []
+    return []
+
+
+# Save books to file
+def save_books():
+    with open(FILE_NAME, "w") as file:
+        json.dump(books, file, indent=4)
+
+
+books = load_books()
+
+
+# Add Book
+def add_book():
+    book_id = simpledialog.askstring(
+        "Add Book",
+        "Enter Book ID:"
+    )
+
+    if not book_id:
+        return
+
+    title = simpledialog.askstring(
+        "Add Book",
+        "Enter Book Title:"
+    )
+
+    if not title:
+        return
+
+    author = simpledialog.askstring(
+        "Add Book",
+        "Enter Author Name:"
+    )
+
+    if not author:
+        return
+
+    for book in books:
+        if book["id"] == book_id:
+            messagebox.showerror(
+                "Error",
+                "Book ID already exists!"
+            )
+            return
+
+    new_book = {
+        "id": book_id,
+        "title": title,
+        "author": author,
+        "status": "Available",
+        "issued_to": ""
+    }
+
+    books.append(new_book)
+    save_books()
+
+    messagebox.showinfo(
+        "Success",
+        "Book added successfully!"
+    )
+
+
+# Search Book
+def search_book():
+    keyword = simpledialog.askstring(
+        "Search Book",
+        "Enter Book ID or Title:"
+    )
+
+    if not keyword:
+        return
+
+    results = []
+
+    for book in books:
+        if (
+            keyword.lower() in book["id"].lower()
+            or keyword.lower() in book["title"].lower()
+        ):
+            results.append(book)
+
+    if not results:
+        messagebox.showinfo(
+            "Search Result",
+            "Book not found!"
+        )
+        return
+
+    result = ""
+
+    for book in results:
+        result += (
+            "Book ID: " + book["id"] + "\n"
+            "Title: " + book["title"] + "\n"
+            "Author: " + book["author"] + "\n"
+            "Status: " + book["status"] + "\n"
+            "Issued To: " + book["issued_to"] + "\n"
+            "--------------------------\n"
+        )
+
+    messagebox.showinfo(
+        "Search Result",
+        result
+    )
+
+
+# Issue Book
+def issue_book():
+    book_id = simpledialog.askstring(
+        "Issue Book",
+        "Enter Book ID:"
+    )
+
+    if not book_id:
+        return
+
+    for book in books:
+
+        if book["id"] == book_id:
+
+            if book["status"] == "Issued":
+                messagebox.showerror(
+                    "Error",
+                    "Book is already issued!"
+                )
+                return
+
+            student = simpledialog.askstring(
+                "Issue Book",
+                "Enter Student Name:"
+            )
+
+            if not student:
+                return
+
+            book["status"] = "Issued"
+            book["issued_to"] = student
+
+            save_books()
+
+            messagebox.showinfo(
+                "Success",
+                "Book issued successfully!"
+            )
+            return
+
+    messagebox.showerror(
+        "Error",
+        "Book not found!"
+    )
+
+
+# Return Book
+import tkinter as tk
+from tkinter import messagebox, simpledialog
+import json
+import os
+
+FILE_NAME = "books.json"
+
+
+# Load books from file
+def load_books():
+    if os.path.exists(FILE_NAME):
+        try:
+            with open(FILE_NAME, "r") as file:
+                return json.load(file)
+        except:
+            return []
+    return []
+
+
+# Save books to file
+def save_books():
+    with open(FILE_NAME, "w") as file:
+        json.dump(books, file, indent=4)
+
+
+books = load_books()
+
+
+# Add Book
+def add_book():
+    book_id = simpledialog.askstring(
+        "Add Book",
+        "Enter Book ID:"
+    )
+
+    if not book_id:
+        return
+
+    title = simpledialog.askstring(
+        "Add Book",
+        "Enter Book Title:"
+    )
+
+    if not title:
+        return
+
+    author = simpledialog.askstring(
+        "Add Book",
+        "Enter Author Name:"
+    )
+
+    if not author:
+        return
+
+    for book in books:
+        if book["id"] == book_id:
+            messagebox.showerror(
+                "Error",
+                "Book ID already exists!"
+            )
+            return
+
+    new_book = {
+        "id": book_id,
+        "title": title,
+        "author": author,
+        "status": "Available",
+        "issued_to": ""
+    }
+
+    books.append(new_book)
+    save_books()
+
+    messagebox.showinfo(
+        "Success",
+        "Book added successfully!"
+    )
+
+
+# Search Book
+def search_book():
+    keyword = simpledialog.askstring(
+        "Search Book",
+        "Enter Book ID or Title:"
+    )
+
+    if not keyword:
+        return
+
+    results = []
+
+    for book in books:
+        if (
+            keyword.lower() in book["id"].lower()
+            or keyword.lower() in book["title"].lower()
+        ):
+            results.append(book)
+
+    if not results:
+        messagebox.showinfo(
+            "Search Result",
+            "Book not found!"
+        )
+        return
+
+    result = ""
+
+    for book in results:
+        result += (
+            "Book ID: " + book["id"] + "\n"
+            "Title: " + book["title"] + "\n"
+            "Author: " + book["author"] + "\n"
+            "Status: " + book["status"] + "\n"
+            "Issued To: " + book["issued_to"] + "\n"
+            "--------------------------\n"
+        )
+
+    messagebox.showinfo(
+        "Search Result",
+        result
+    )
+
+
+# Issue Book
+def issue_book():
+    book_id = simpledialog.askstring(
+        "Issue Book",
+        "Enter Book ID:"
+    )
+
+    if not book_id:
+        return
+
+    for book in books:
+
+        if book["id"] == book_id:
+
+            if book["status"] == "Issued":
+                messagebox.showerror(
+                    "Error",
+                    "Book is already issued!"
+                )
+                return
+
+            student = simpledialog.askstring(
+                "Issue Book",
+                "Enter Student Name:"
+            )
+
+            if not student:
+                return
+
+            book["status"] = "Issued"
+            book["issued_to"] = student
+
+            save_books()
+
+            messagebox.showinfo(
+                "Success",
+                "Book issued successfully!"
+            )
+            return
+
+    messagebox.showerror(
+        "Error",
+        "Book not found!"
+    )
+
+
+# Return Book
+def return_book():
+    book_id = simpledialog.askstring(
+        "Return Book",
+        "Enter Book ID:"
+    )
+
+    if not book_id:
+        return
+
+    for book in books:
+
+        if book["id"] == book_id:
+
+            if book["status"] == "Available":
+                messagebox.showerror(
+                    "Error",
+                    "Book is already available!"
+                )
+                return
+
+            book["status"] = "Available"
+            book["issued_to"] = ""
+
+            save_books()
+
+            messagebox.showinfo(
+                "Success",
+                "Book returned successfully!"
+            )
+            return
+
+    messagebox.showerror(
+        "Error",
+        "Book not found!"
+    )
+
+
+# Main Window
+root = tk.Tk()
+
+root.title("Library Book Management System")
+root.geometry("500x500")
+
+title = tk.Label(
+    root,
+    text="LIBRARY BOOK MANAGEMENT SYSTEM",
+    font=("Arial", 18, "bold")
+)
+
+title.pack(pady=30)
+
+
+# Add Book Button
+tk.Button(
+    root,
+    text="Add Book",
+    command=add_book,
+    width=25,
+    height=2
+).pack(pady=10)
+
+
+# Search Book Button
+tk.Button(
+    root,
+    text="Search Book",
+    command=search_book,
+    width=25,
+    height=2
+).pack(pady=10)
+
+
+# Issue Book Button
+tk.Button(
+    root,
+    text="Issue Book",
+    command=issue_book,
+    width=25,
+    height=2
+).pack(pady=10)
+
+
+# Return Book Button
+tk.Button(
+    root,
+    text="Return Book",
+    command=return_book,
+    width=25,
+    height=2
+).pack(pady=10)
+
+
+# Exit Button
+tk.Button(
+    root,
+    text="Exit",
+    command=root.destroy,
+    width=25,
+    height=2
+).pack(pady=10)
+
+
+# Start Application
+root.mainloop()
+def return_book():
+    book_id = simpledialog.askstring(
+        "Return Book",
+        "Enter Book ID:"
+    )
+
+    if not book_id:
+        return
+
+    for book in books:
+
+        if book["id"] == book_id:
+
+            if book["status"] == "Available":
+                messagebox.showerror(
+                    "Error",
+                    "Book is already available!"
+                )
+                return
+
+            book["status"] = "Available"
+            book["issued_to"] = ""
+
+            save_books()
+
+            messagebox.showinfo(
+                "Success",
+                "Book returned successfully!"
+            )
+            return
+
+    messagebox.showerror(
+        "Error",
+        "Book not found!"
+    )
+
+
+
+# Main Window
+root = tk.Tk()
+
+root.title("Library Book Management System")
+root.geometry("500x500")
+
+title = tk.Label(
+    root,
+    text="LIBRARY BOOK MANAGEMENT SYSTEM",
+    font=("Arial", 18, "bold")
+)
+
+title.pack(pady=30)
+
+
+# Add Book Button
+tk.Button(
+    root,
+    text="Add Book",
+    command=add_book,
+    width=25,
+    height=2
+).pack(pady=10)
+
+
+# Search Book Button
+tk.Button(
+    root,
+    text="Search Book",
+    command=search_book,
+    width=25,
+    height=2
+).pack(pady=10)
+
+
+# Issue Book Button
+tk.Button(
+    root,
+    text="Issue Book",
+    command=issue_book,
+    width=25,
+    height=2
+).pack(pady=10)
+
+
+# Return Book Button
+tk.Button(
+    root,
+    text="Return Book",
+    command=return_book,
+    width=25,
+    height=2
+).pack(pady=10)
+
+
+# Exit Button
+tk.Button(
+    root,
+    text="Exit",
+    command=root.destroy,
+    width=25,
+    height=2
+).pack(pady=10)
+
+
+# Start Application
+root.mainloop()
